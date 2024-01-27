@@ -8,7 +8,7 @@ from .models import Project, Pledge
 from .serializers import ProjectSerializer, PledgeSerializer, ProjectDetailSerializer
 from django.http import Http404
 from rest_framework import status, permissions 
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsSupporterOrReadOnly
 
 
 
@@ -93,4 +93,12 @@ class PledgeList(APIView):
            status=status.HTTP_400_BAD_REQUEST
        )
 
+class PledgeDetail(APIView):
+
+   permission_classes = [
+      permissions.IsAuthenticatedOrReadOnly,
+      IsSupporterOrReadOnly 
+   ] 
+
+   
 
