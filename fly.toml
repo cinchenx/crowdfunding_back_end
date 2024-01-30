@@ -41,10 +41,10 @@ console_command = '/code/manage.py shell'
   restart_limit = 0
   timeout = "2s"
 
-[[statics]]
+  [[statics]]
   guest_path = "/app/public"
   url_prefix = "/static/"
 
-[mounts]  
+  [mounts]  
   source = "dbvol"  
   destination = "/dbvol"
