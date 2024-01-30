@@ -1,18 +1,20 @@
-# fly.toml app configuration file generated for impact-crowdfunding on 2024-01-27T11:00:31+08:00
+# fly.toml app configuration file generated for hidden-thunder-987 on 2024-01-21T17:42:34+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
-
-app = 'impact-crowdfunding'
-primary_region = 'syd'
-console_command = '/code/manage.py shell'
+app = "impact-crowdfunding"
+primary_region = "syd"
+console_command = "/code/manage.py shell"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
 
 [build]
 
 [env]
-  PORT = '8000'
+  PORT = "8000"
 
-[experimental]  
+[experimental]
   auto_rollback = true
 
 [[services]]
@@ -21,30 +23,31 @@ console_command = '/code/manage.py shell'
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
+
   [services.concurrency]
     hard_limit = 25
     soft_limit = 20
     type = "connections"
 
-    [[services.ports]]
+  [[services.ports]]
     force_https = true
     handlers = ["http"]
     port = 80
 
-    [[services.ports]]
+  [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
 
-    [[services.tcp_checks]]
+  [[services.tcp_checks]]
     grace_period = "1s"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
 
-  [[statics]]
-    guest_path = "/app/public"
-    url_prefix = "/static/"
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/static/"
 
-  [mounts]  
-    source = "dbvol"  
-    destination = "/dbvol"
+[mounts]
+  source = "dbvol"
+  destination = "/dbvol"
